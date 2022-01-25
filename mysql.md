@@ -52,7 +52,33 @@ innoDB的MVCC是通过在每行记录后面保存两个隐藏的列实现，一�
 
 
 
+#### innoDB概览
 
+innoDB采用MVCC来支持高并发，并且实现了四个标准的隔离级别，并且采用间隙锁策略防止幻读，使得innoDB不仅仅锁定查询涉及的行，还对索引中的间隙进行锁定，防止幻影行的插入。
+
+
+
+
+
+## 性能剖析
+
+#### show profile
+
+1、set profiling = 1；
+
+2、show profile for query #{n}
+
+可以给出查询执行的步骤和每个步骤花费的时间
+
+
+
+#### show status
+
+1、flush status ; 将会话级别的计数器先置为0
+
+2、执行查询语句；
+
+3、show status;
 
 
 
