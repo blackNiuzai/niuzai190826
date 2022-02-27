@@ -1,11 +1,10 @@
 
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.IntConsumer;
+import java.util.stream.IntStream;
 
 /**
  * 你的系统登录接口正在被刷，需要建立一个防刷系统。
@@ -26,10 +25,23 @@ public class SecurityService {
     // 记录最近请求的时间， 最多存储30次
     static Map<String, LinkedList<Long>> requestTimeMap = new HashMap<>();
 
-    static ConcurrentHashMap<String, ReentrantLock> mutexKey = new  ConcurrentHashMap<>();
-
     static Map<String, Long> ipLockTime = new HashMap<>();
 
+    public static void main(String[] args) {
+
+        IntStream.range(1, 50).forEach(value -> {
+            boolean res = checkAttackV2("192.168.0.0.1");
+            System.out.println(Boolean.toString(res) + value);
+        });
+
+        IntStream.range(1, 50).forEach(value -> {
+            boolean res = checkAttackV2("192.168.0.0.2");
+            System.out.println(Boolean.toString(res) + value);
+        });
+        System.out.println("ok");
+
+
+    }
 
     public static boolean checkAttack(String clientIp){
         // 判断是否已经30次
@@ -41,45 +53,28 @@ public class SecurityService {
 
 
     public static boolean checkAttackV2(String clientIp){
-        // 循环直到取得正确的锁
-        ReentrantLock keyObject = null;
-        ReentrantLock keyObjectInMap;
-        do{
-            if(keyObject != null){ keyObject.unlock();}
-            keyObject = mutexKey.computeIfAbsent(clientIp, k -> new ReentrantLock());
-            keyObject.lock();
-            keyObjectInMap = mutexKey.get(clientIp);
-        }while ( keyObjectInMap == null ||  keyObjectInMap != keyObject);
 
-        try{
-            LinkedList<Long> requestTimeList = requestTimeMap.putIfAbsent(clientIp, new LinkedList<>());
+        Boolean res = SyncProcessByKey.SyncProcess(clientIp, () -> {
+            if (ipLockTime.containsKey(clientIp)) return false;
+            LinkedList<Long> requestTimeList = requestTimeMap.computeIfAbsent(clientIp, k -> new LinkedList<>());
             Long nowStamp = Instant.now().getEpochSecond();
-            if (requestTimeList.size() == 30){
+            if (requestTimeList.size() == timeLimit) {
                 requestTimeList.poll();
                 requestTimeList.addLast(nowStamp);
                 Long firstTime = requestTimeList.peek();
-                if (nowStamp - firstTime < halfHourSeconds){
+                if (nowStamp - firstTime < halfHourSeconds) {
                     ipLockTime.put(clientIp, nowStamp);
                     requestTimeMap.remove(clientIp);
                     return false;
                 }
-            }else {
+            } else {
                 requestTimeList.addLast(nowStamp);
                 ipLockTime.remove(clientIp);
             }
+            return true;
+        });
 
-        }finally {
-            if (!keyObject.hasQueuedThreads()){
-                mutexKey.remove(clientIp);
-            }
-            keyObject.unlock();
-        }
-
-        return true;
+        return res;
     }
-
-
-
-
 
 }
