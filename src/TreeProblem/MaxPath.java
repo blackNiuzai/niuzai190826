@@ -1,3 +1,7 @@
+package TreeProblem;
+
+import TreeProblem.TreeNode;
+
 public class MaxPath {
 
     int maxRes = Integer.MIN_VALUE;

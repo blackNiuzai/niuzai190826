@@ -1,3 +1,7 @@
+package TreeProblem;
+
+import TreeProblem.TreeNode;
+
 /**
  * 二叉树的三种遍历方式
  *1、先序遍历： 先访问根节点， 然后访问左孩子， 最后访问右孩子
