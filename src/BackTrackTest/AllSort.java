@@ -1,15 +1,16 @@
+package BackTrackTest;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public class AllSort {
 
+    public List<List<Integer>> res = new LinkedList<>();
 
     public static void main(String[] args) {
         AllSort allSort = new AllSort();
         allSort.permute(new int[]{1,2,3});
     }
-
-    public List<List<Integer>> res = new LinkedList<>();
 
     // 全排列
     public List<List<Integer>> permute(int[] nums) {
@@ -32,7 +33,6 @@ public class AllSort {
             //取消选择
             track.removeLast();
         }
-
     }
 
 

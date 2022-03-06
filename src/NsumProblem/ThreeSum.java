@@ -1,3 +1,5 @@
+package NsumProblem;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,8 +13,6 @@ public class ThreeSum {
         ThreeSum threeSum = new ThreeSum();
         List<List<Integer>> lists = threeSum.threeSum(new int[]{0,0,0}, 0);
         System.out.println(lists);
-
-
     }
 
     public List<List<Integer>> threeSum(int[] nums, int target) {
