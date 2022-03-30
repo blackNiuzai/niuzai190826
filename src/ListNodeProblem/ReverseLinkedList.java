@@ -1,4 +1,4 @@
-
+package ListNodeProblem;
 
 
 public class ReverseLinkedList {
@@ -27,7 +27,7 @@ public class ReverseLinkedList {
             return head;
         }
         ListNode newHead = reverse2(head.next);
-        head = head.next.next;
+        head.next.next = head;
         head.next = null;
         return newHead;
     }

@@ -1,6 +1,4 @@
-
-
-
+package ListNodeProblem;
 
 public class DeleteNthFromEnd {
 
