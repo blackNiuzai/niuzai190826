@@ -56,6 +56,27 @@ broker接收到数据时。只是将数据写入page cache，并不保证数据�
 batch.size 和linger.ms参数实现批量发送
 
 
+### kafka和rabbitMQ
+rabbitMQ节点之间互相分布式存储队列的master 和 mirror
+但是消费和生产只能通过master进行，当服务连接到mirror机器，也会路由到master先操作，再同步到mirror机器
+rabbitMQ的mirror队列只做镜像作为容灾使用，不承担客户端的读写压力
+
+rabbitMQ不承诺消息的顺序性，因此可以多线程并发处理
+
+rabbitMQ master queue单节点导致性能瓶颈，吞吐量受限
+
+
+### consumer 和 partition数量
+consumer比partition多的时候，有部分consumer享受不到，这也是为了保证一个顺序性
+
+
+
+
+
+
+
+
+
 
 
 
