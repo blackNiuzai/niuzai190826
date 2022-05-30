@@ -35,4 +35,18 @@ public class TwoSum {
 
 
 
+    public int[] twoSum2(int []nums, int target){
+        Map<Integer, Integer> addMap = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if(addMap.containsKey(target - nums[i])){
+                return new int[]{addMap.get((target-nums[i])), i};
+            }
+            addMap.put(nums[i], i);
+        }
+
+        return new int[0];
+
+    }
+
+
 }
