@@ -193,6 +193,21 @@ show index from table
 
 
 
+### explain小记
+####type列 访问类型
+all：全表扫描
+index：仅仅代表按照索引顺序扫描，并不能判断有没有扫全表，还要看有没有where和limit等
+range:范围扫描
+ref：也是一种索引访问，它返回所有匹配某个单独值的行
+const、system：当mysql 能对查询的部分进行优化，并转换成常量的时候
+
+####extra列
+using index：表示使用了覆盖索引
+using where：仅表示mysql服务器在收到存储引擎返回的记录后进行 “后过滤”
+using temporary： 排序时候使用了临时表
+using filesort： 对数据使用一个外部索引排序，而不是按照表内的索引顺序进行读取。
+
+
 
 
 
