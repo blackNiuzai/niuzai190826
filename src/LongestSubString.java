@@ -3,6 +3,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * 最长不重复子串
+ */
 public class LongestSubString {
 
 
