@@ -93,7 +93,7 @@ class Provider implements Runnable{
     private void doProvide(){
         try {
             lock.lock();
-            while (queue.size() == 200){
+            while (queue.size() == 2){
                 System.out.println("队列满无法添加任务");
                 un_full.await();
             }

@@ -1,7 +1,6 @@
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 有效括号
@@ -19,8 +18,58 @@ import java.util.Map;
  */
 public class StackTest1 {
 
+    public static void main(String[] args) {
+//        String s = "()";
+//        int a  = s.toCharArray().length;
+//        System.out.println(a);
+//
+//        char c = s.toCharArray()[0];
+//        boolean valid = isValid(s);
 
-    public boolean isValid(String s) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>((x, y) -> {
+            return x-y;
+        });
+
+        pq.add(2);
+        pq.add(2);
+        pq.add(3);
+        pq.add(1);
+
+        pq.add(0);
+        System.out.println(pq.peek());
+        while(pq.size() > 0){
+            System.out.println(pq.poll());
+        }
+
+        int sqrt = (int) Math.sqrt(3);
+
+        boolean digit = Character.isDigit('2');
+        new ArrayList<Integer>();
+
+        String s = "()";
+        char[] chars = s.toCharArray();
+        new ArrayList<Character>();
+
+        Set<Integer> res = new HashSet<>();
+        ReentrantLock lock = new ReentrantLock();
+        AtomicInteger inte = new AtomicInteger(1);
+        inte.incrementAndGet();
+        Map<Integer, Integer> ma=new HashMap<>();
+        ma.put(1, 1);
+        for(Map.Entry<Integer, Integer> entry: ma.entrySet()){
+            entry.getKey();
+            entry.getValue();
+        }
+
+        int[] ints = Arrays.copyOfRange(new int[]{0, 1, 2}, 0, 1);
+
+
+    }
+
+
+    public static boolean isValid(String s) {
+
+
         int length = s.length();
         if (length % 2 == 1) return false;
 
