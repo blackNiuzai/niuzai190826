@@ -242,6 +242,16 @@ redolog用户断电等故障恢复
 
 redolog主要管主库， binlog主要影响从库的数据， 为了保证一致，mysql用了两阶段提交
 
+####两阶段提交
+需要提前了解的是：binlog在事务执行过程中也先写了binlog cache，事务提交后才写到binlog文件中
+
+事务commit
+——> innodb写redoLog, 同时将管理这两个log的事务的状态标记位prepare（这里只是先写buffer，刷盘时机由其他参数控制）
+——> server层将binlog cache 写到binlog文件（这里是先写page cache，刷盘时机有其他参数控制）
+——> binlog写完文件后将redo log状态设置位commit
+
+
+
 
 #### 主从延迟的根本原因
 从库同步时，先将binlog写入relayLog就返回了。从库再单线程回放
@@ -261,8 +271,9 @@ redolog主要管主库， binlog主要影响从库的数据， 为了保证一�
 读取的时候，得益于指针直接指向数据，索引不需要所以myisam整体更快吧（猜测）
 
 
-
-
+####b+tree 和跳表
+mysql一般承载的数据量大，用跳表的话层高太高，磁盘IO多，查询性能会差点，
+而redis本身是内存操作，不涉及磁盘的io, 用跳表写入操作的性能高一点（不要做树的旋转啥的）
 
 
 

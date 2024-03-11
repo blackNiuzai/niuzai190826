@@ -33,3 +33,11 @@ ByteBuffer， CharBuffer， DoubleBuffer
 FloatBuffer， IntBuffer， LongBuffer， 
 ShortBuffer 这些buffer覆盖了能够通过I/O发送的所有基本类型
 
+
+
+#### selector多路复用器
+selector.select(); 阻塞不占cpu
+
+
+
+

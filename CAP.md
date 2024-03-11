@@ -3,7 +3,6 @@ C - consistentcy 一致性
 A - availability 可用性
 P - Partition tolerance 分区容错性
 
-redis是CP的
 
 #### ZAB 和 raft  都是CP的分布式一致性协议
 数据同步协议：

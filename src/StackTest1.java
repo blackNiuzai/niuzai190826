@@ -1,6 +1,10 @@
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
+
 
 /**
  * 有效括号
@@ -17,6 +21,9 @@ import java.util.concurrent.locks.ReentrantLock;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class StackTest1 {
+
+    ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
+
 
     public static void main(String[] args) {
 //        String s = "()";
@@ -63,12 +70,10 @@ public class StackTest1 {
 
         int[] ints = Arrays.copyOfRange(new int[]{0, 1, 2}, 0, 1);
 
-
     }
 
 
     public static boolean isValid(String s) {
-
 
         int length = s.length();
         if (length % 2 == 1) return false;
@@ -77,6 +82,7 @@ public class StackTest1 {
         matchMap.put(')', '(');
         matchMap.put('}', '{');
         matchMap.put(']', '[');
+
 
         Deque<Character> stack = new LinkedList<>();
         char[] chars = s.toCharArray();
@@ -99,7 +105,19 @@ public class StackTest1 {
 
 
 
+    public void testThreadLocal() throws IOException {
+        threadLocal.set(1);
+        Integer integer = threadLocal.get();
+        System.out.println();
+        threadLocal.remove();
 
+        ServerSocket serverSocket = new ServerSocket(9000);
+        Socket accept = serverSocket.accept();
+        accept.getInputStream().read(new byte[1024]);
+
+
+
+    }
 
 
 

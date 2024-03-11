@@ -12,7 +12,7 @@ public class PrintABC {
         Object o = new Object();
 
         Thread threadA = new Thread(()->{
-            while(i <= 60){
+            while(i <= 100){
                 System.out.println(Thread.currentThread().getName() + "判断为" + i);
                 synchronized (o){
                     try{
@@ -36,7 +36,7 @@ public class PrintABC {
         threadA.start();
 
         Thread threadB = new Thread(()->{
-            while(i <= 60){
+            while(i <= 100){
                 System.out.println(Thread.currentThread().getName() + "判断为" + i);
                 synchronized (o){
                     try{
@@ -60,7 +60,7 @@ public class PrintABC {
         threadB.start();
 
         Thread threadC = new Thread(()->{
-            while(i<=60){
+            while(i<=100){
                 System.out.println(Thread.currentThread().getName() + "判断为" + i);
                 synchronized (o){
                     try{

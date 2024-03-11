@@ -51,7 +51,28 @@ postConstruct是注解执行在构造函数执行之后，是对bean进行初始
 
 
 #### FactoryBean
-spring实例化的策略有两种： 1、通过反射 2、通过工厂方法
+spring实例化的策略有两种： 1、通过反射 2、通过工厂方法（factoryBean既可以是反射也可以是工厂）
+但是反射这种方式对interface是没用的，mybatis我们可以只定义interface并为加了mapper注解的接口，
+是因为它底层使用了factoryBean去创建实例，并生成动态代理（即mapper接口的实现类单例）
+
+
+####springMVC
+一般mvc的web项目有一个webapp文件夹，下面有个web.xml, tomcat在启动的时候会读取web.xml
+web.xml会定义servlet对象（具体就是dispatchServlet）
+tomcat启动时会调用dispatchServlet的初始化方法，会创建spring容器  （注意：如果在web.xml定义两个dispatchServlet， 那项目启动会有两套容器）
+创建完spring容器后会发布事件，事件会触发InitStrategies（里面会触发handlerMapping之类的）
+
+
+### 为什么bean容器需要concurrentHashMap
+因为spring允许我们自定义bean，而此时如果用了多线程是会有并发问题的，因此spring在底层用了concurrentHashMap防止了并发创建
+https://stackoverflow.com/questions/49131471/why-bean-definitions-is-stored-in-concurrent-hashmap
+
+
+
+
+
+
+
 
 
 
